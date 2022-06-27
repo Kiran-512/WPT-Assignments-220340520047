@@ -1,0 +1,15 @@
+button{
+    background-color: rgb(210, 229, 223);
+    border-radius: 5px;
+    padding: 5px;
+    margin-top: 20px;
+}
+button:hover{
+    background-color: rgb(175, 207, 197);
+}
+span{
+    border: 1px solid tan;
+    display: inline-block;
+    padding: 5px;
+    border-radius: 5px;
+}

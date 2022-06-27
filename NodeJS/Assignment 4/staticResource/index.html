@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajax Assigm=nment</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script>
+$(()=>{
+        console.log("is it working...")
+        $("#btn").click(()=>{
+
+        let input = { username :$("#EmpID").val() ,pass :$("#password").val() }
+
+        let paramsOfAjaxFunc = {
+            data : input,
+            type :'GET',
+            dataType : "JSON",  
+            url : "http://localhost:1000/login",
+            success : (dataFromServer)=>{
+                console.log(dataFromServer)
+                if(dataFromServer.status==true)
+                $("#msg").text(dataFromServer.message)
+                else
+                $("#msg").text(dataFromServer.message)
+            },
+            error:(Error)=>{
+                console.log("failed to contact server")
+            } 
+        }
+        $.ajax(paramsOfAjaxFunc);
+    })
+})
+    </script>
+    <style>
+        .row{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 90vh;
+        }
+        .col{
+            border: 1px solid black;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!-- without form action and method attributes by using ajax contacting server so that page wont get refreshed but we can retrive the data from the server asynchronously -->
+    <hr size="5">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <input type="text" name=""  id="EmpID" placeholder="EmpID" required>
+                <br>
+                <br>
+                <input type="password" name="" id="password" placeholder="password" required>
+                <br>
+                <button id="btn">login</button>
+                <br>
+                <span id="msg">OP?</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

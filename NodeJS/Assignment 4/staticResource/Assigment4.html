@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Addition And Subtraction Client-Sever</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script>
+        $(() => {
+            console.log("is it working fine..YES!")
+
+            $("#symbol").blur(() => {
+
+                let input = { num1 : $("#num1").val(),num2 : $("#num2").val(),symbol : $("#symbol").val() }
+
+                console.log(input, typeof input)
+
+                let paramsToAjax = {
+                    data: input,
+                    type: "GET",
+                    url : "http://localhost:1000/MathOperations", // this url here is in small letters 
+                    dataType : 'JSON',
+                    success : (OPfromServer) => { //server send output and that output is stored in the variable "OPfromServer" here in this function so we can use the properties of the output from server here as output is object from server
+                        console.log("success called by the system on reaching server ..")
+                        console.log(OPfromServer) 
+                        console.log(OPfromServer.status, typeof OPfromServer.status) 
+                        if(OPfromServer.status){
+                            $("#msg").text(OPfromServer.result)
+                        }
+                    },
+                    error : (errorMessage) => { console.log(errorMessage) }
+                }
+                $.ajax(paramsToAjax);
+            })
+        })
+
+    </script>
+    <style>
+        .row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 90vh;
+        }
+
+        .col {
+            border: 1px solid black;
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <input type="text" id="num1" name="" placeholder="Enter Num 1">
+                <input type="text" id="num2" name="" placeholder="Enter Num 2">
+                <input type="text" id="symbol" name="" placeholder="Operand">
+                <span id="msg">OP?</span>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

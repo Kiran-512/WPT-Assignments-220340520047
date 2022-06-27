@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ass4</title>
+    <script
+        src="https://code.jquery.com/jquery-3.6.0.js"
+        ></script>
+        <script>
+           $(()=>{
+                
+                $("#t1").blur(()=>{
+                    let ip={pincode:$("#t1").val()};
+                    let parameterstothefunction=
+                        { data:ip, 
+                          url: "http://localhost:900/getdata",
+                          type:'get',
+                          dataType: "json",
+                          success:(datafound)=>{ 
+                              console.log( "data given by server in success" + datafound.status)
+                              if(datafound.status  === true )
+                              {
+                                    console.log(datafound.data[0].areaname);
+                                   $("#t2").val(datafound.data[0].areaname);
+                                       $("#message").text("successful"); 
+                              } 
+                              else
+                              {
+                                    $("#message").text("userid or password wrong");
+                              }
+                            },
+                          error:(errorgivenbyserver)=> { console.log("failed to contact server "+errorgivenbyserver)}
+                        }  ;
+                        
+                        //time to call the function
+                        console.log("is the function working");
+                        $.ajax(parameterstothefunction);
+                });
+           });
+        </script>
+</head>
+<body>
+    <input type="text" id="t1" placeholder="pincode" /><br/><br/>
+    <input type="text" id="t2" placeholder="areaname" /><br/>
+    <p id="message"> what happened to login </p>
+
+</body>
+</html>

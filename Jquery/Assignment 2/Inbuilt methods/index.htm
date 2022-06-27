@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+    <title>Assignment No. 2</title>
+    <style>
+      label,
+      input {
+        display: inline-block;
+        min-width: 200px;
+        margin-bottom: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <form action="">
+      <fieldset>
+        <legend>Employee Details</legend>
+          <label for="">Employee ID</label>
+          <input type="number" id="eid" /> <span id="msg"></span><br />
+          <label for="">Employee Name</label>
+          <input type="text" id="ename" /><br />
+          <label for="">Employee email</label>
+          <input type="mail" id="email" /><br />
+          <label for="">Employee Dept No</label>
+          <input
+            type="number"
+            max="100"
+            min="10"
+            step="10"
+            name=""
+            id="deptno"
+          /><br />
+        </div>
+      </fieldset>
+    </form>
+    <div id="actions">
+      <button disabled id="add">Add details</button>
+      <button disabled id="edit">Modify details</button>
+      <button disabled id="delet">Remove details</button>
+      <button disabled id="viewAll">View all details</button>
+      <button disabled id="viewDeptId">View deptNoWise</button>
+    </div>
+    <hr size="5px" />
+    <div id="empDetails">Emp Details will be visible here..</div>
+  </body>
+  <script>
+    let employee = [
+      {
+        eid: 101,
+        ename: "Kiran Yadav",
+        email: "kiranyadav@gmail.com",
+        deptno: 10,
+      },
+      {
+        eid: 102,
+        ename: "Akshay Navale",
+        email: "akshaynavale@gmail.com",
+        deptno: 10,
+      },
+      {
+        eid: 103,
+        ename: "Pranit Jagtap",
+        email: "pranitjagtap@gmail.com",
+        deptno: 10,
+      },
+      //..........
+    ];
+
+    // console.log(employee[0].eid)
+    // console.log(employee.includes(101,"Kiran Yadav","kiranyadav@gmail.com",10))// false
+
+    //field objects
+    const eid = document.querySelector("#eid");
+    const ename = document.getElementById("ename");
+    const email = document.getElementById("email");
+    const deptno = document.getElementById("deptno");
+    const msg = document.getElementById("msg");
+
+    //button objects
+    const add = document.getElementById("add");
+    const edit = document.getElementById("edit");
+    const delet = document.getElementById("delet");
+    const viewAll = document.getElementById("viewAll");
+    const viewDeptId = document.getElementById("viewDeptId");
+
+    //emp details object
+    const empDetails = document.getElementById("empDetails");
+
+    function findEid(newEmpID) {
+      newEmpID = parseInt(newEmpID);
+      let res = employee.some((emp) => {
+        console.log(emp.eid);
+        console.log("newid " + newEmpID, typeof newEmpID);
+        console.log(emp.eid === newEmpID);
+        return emp.eid === newEmpID;
+      });
+      return res;
+    }
+
+    function addEmpDetails(EID) {
+      ENAME = ename.value;
+      EMAIL = email.value;
+      DEPTNO = deptno.value;
+
+      let obj = { eid: EID, ename: ENAME, email: EMAIL, deptno: DEPTNO };
+
+      employee.push(obj);
+    }
+
+    function IndexOfEID(oldEmpID) {
+      oldEmpID = parseInt(oldEmpID);
+      let res = employee.findIndex((emp, index) => {
+        if (emp.eid === oldEmpID) {
+          console.log("index inside if " + index, typeof index);
+          return index;
+        }
+      });
+      console.log("res " + res, typeof res);
+      return res;
+    }
+
+    /*
+        IndexOfEID(101);
+        IndexOfEID(102);
+        IndexOfEID(103);
+*/
+
+    function modifyEmpDetails(EID) {
+      ENAME = prompt("Enter employee name ");
+      EMAIL = prompt("Enter employee email");
+      DEPTNO = prompt("Enter employee deptno");
+      return (obj = { eid: EID, ename: ENAME, email: EMAIL, deptno: DEPTNO });
+    }
+
+    function printArray() {
+      content = "";
+      employee.forEach((emp, index) => {
+        console.log(index+ " " + emp)
+        content += "{ " + emp.eid + " " + emp.ename +" " + emp.email + " "+ emp.deptno + " }  ";
+      });
+      return content;
+    }
+
+    /*
+        let res = findEid(105)
+        console.log(res, typeof res)
+        */
+    /*
+        1.	Onblur
+            a.	Empno
+            b.	Check in the array if empno is found, if found
+            i.	Modify
+            ii.	Remove
+            c.	If empno not found
+            i.	Enable add button
+        */
+    eid.addEventListener("blur", () => {
+      let empno = eid.value;
+      let found = findEid(empno);
+      if (found) {
+        add.disabled = true;
+        edit.disabled = false;
+        delet.disabled = false;
+        viewAll.disabled = true;
+        viewDeptId.disabled = true;
+        msg.innerText = "employee details already present in the array";
+      } else {
+        add.disabled = false;
+        edit.disabled = true;
+        delet.disabled = true;
+        msg.innerText = "employee details not found in the array";
+      }
+    });
+
+    //add
+    add.addEventListener("click", () => {
+      let EID = eid.value;
+      EID = parseInt(EID);
+      if(!isNaN(EID)){
+      addEmpDetails();
+      printArray();
+      add.disabled = true;
+      edit.disabled = true;
+      delet.disabled = true;
+      viewAll.disabled = false;
+      viewDeptId.disabled = false;
+      msg.innerText = "Employee details added successfully in the array";
+    }
+    else{
+        msg.innerText = "Please enter the details to add";
+    }
+    });
+
+    // EDIT options
+    edit.addEventListener("click", () => {
+      let oldEmpID = eid.value;
+      let obj = modifyEmpDetails(oldEmpID);
+      let index = IndexOfEID(oldEmpID);
+      console.log(index);
+      employee[index] = obj;
+      console.log(obj.ename + " is added");
+      eid.value = "";
+      add.disabled = true;
+      edit.disabled = true;
+      delet.disabled = true;
+      viewAll.disabled = false;
+      viewDeptId.disabled = false;
+      msg.innerText = "Employee Details Updated";
+    });
+
+    //remove
+    delet.addEventListener("click", () => {
+      let empIDTobeDeleted = eid.value;
+      let index = IndexOfEID(empIDTobeDeleted);
+      delete [index];
+      console.log("emp record deletd from index " + index);
+      add.disabled = true;
+      edit.disabled = true;
+      delet.disabled = true;
+      viewAll.disabled = false;
+      viewDeptId.disabled = false;
+      msg.innerText = "Employee Details deleted from records";
+    });
+
+    //viewAll
+    viewAll.addEventListener("click", () => {
+      let output = printArray();
+      empDetails.innerText = output;
+    });
+  </script>
+</html>

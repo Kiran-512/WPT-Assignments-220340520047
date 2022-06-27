@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "express": "^4.18.1",
+    "mysql2": "^2.3.3"
+  },
+  "name": "assignment-5",
+  "version": "1.0.0",
+  "main": "expressJSwithDBandAJAX.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "kiran",
+  "license": "ISC",
+  "description": ""
+}

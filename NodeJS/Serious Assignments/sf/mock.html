@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment 1</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script>
+        $(() => {
+            console.log("its working")
+
+            function showContents() {
+                let ajaxparams = {
+                    data: {},
+                    url: "http://localhost:8081/getALL",
+                    type: 'get',
+                    dataType: "JSON",
+                    success: (output) => {
+                        let items = output;
+                        console.log(output)
+                        console.log(items)
+                        let itemscontents = "";
+                        for (let i = 0; i < items.length; i++) {
+                            itemscontents += "<br/>" + items[i].itemno + "  " + items[i].itemname + " " + items[i].itemprice + " " + items[i].category;
+                        }
+                        $("#contents").html(itemscontents);
+                    },
+                    error: (error) => { console.log("failure " + error) }
+
+                };//end of the object creation for ajaxparams
+                $.ajax(ajaxparams);
+            }
+            showContent();
+        })
+
+    </script>
+    <style>
+        .row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .col {
+            padding: 20px;
+            border: 1px solid black;
+        }
+
+        #display {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <input type="text" id="itemno" placeholder="itemno">
+                <input type="text" id="itemname" placeholder="itemname">
+                <input type="text" id="price" placeholder="price">
+                <input type="text" id="category" placeholder="category">
+            </div>
+        </div>
+        <div class="row">
+            <button id="add">Add items</button>
+            <button id="update">Update items</button>
+        </div>
+        <div class="col" id="contents">
+            show item details
+        </div>
+    </div>
+
+</body>
+
+</html>
